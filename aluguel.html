@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=2.1">
+    <link rel="stylesheet" href="style.css?v=2.2">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/logo.webp">
@@ -276,28 +276,66 @@
                     
                     <div class="circuits-grid">
                         <!-- Circuit 1 -->
-                        <div class="circuit-card">
-                            <div class="circuit-badge">FÓRMULA 1 & PAULISTA</div>
-                            <h4>Autódromo de Interlagos</h4>
-                            <span class="circuit-city">São Paulo / SP</span>
-                            <p>O templo do automobilismo mundial. Uma pista rápida de alta velocidade com curvas lendárias como o *S do Senna*, *Laranjinha* e *Subida dos Boxes*. São 4.309 metros que exigem aerodinâmica refinada e vácuo estratégico.</p>
-                            <div class="circuit-specs">
-                                <div class="c-spec"><span>Extensão</span><strong>4.309 m</strong></div>
-                                <div class="c-spec"><span>Curvas</span><strong>15</strong></div>
-                                <div class="c-spec"><span>Perfil</span><strong>Internacional / F1</strong></div>
+                        <div class="circuit-card-wrapper" onclick="this.classList.toggle('flipped')">
+                            <div class="circuit-card-inner">
+                                <div class="circuit-card-front">
+                                    <div>
+                                        <div class="circuit-badge">FÓRMULA 1 & PAULISTA</div>
+                                        <h4>Autódromo de Interlagos</h4>
+                                        <span class="circuit-city">São Paulo / SP</span>
+                                        <p>O templo do automobilismo mundial. Uma pista rápida de alta velocidade com curvas lendárias como o *S do Senna*, *Laranjinha* e *Subida dos Boxes*. São 4.309 metros que exigem aerodinâmica refinada e vácuo estratégico.</p>
+                                    </div>
+                                    <div>
+                                        <div class="circuit-specs">
+                                            <div class="c-spec"><span>Extensão</span><strong>4.309 m</strong></div>
+                                            <div class="c-spec"><span>Curvas</span><strong>15</strong></div>
+                                            <div class="c-spec"><span>Perfil</span><strong>Internacional / F1</strong></div>
+                                        </div>
+                                        <div class="flip-hint"><i class="fa-solid fa-rotate"></i> Clique para ver o mapa</div>
+                                    </div>
+                                </div>
+                                <div class="circuit-card-back">
+                                    <div>
+                                        <div class="circuit-badge">MAPA DO TRAÇADO</div>
+                                        <h4>Autódromo de Interlagos</h4>
+                                    </div>
+                                    <div class="circuit-map-container">
+                                        <img src="fotos/interlagos-mapa.png" alt="Mapa do Autódromo de Interlagos" class="circuit-map-img">
+                                    </div>
+                                    <div class="flip-hint"><i class="fa-solid fa-rotate"></i> Clique para ver detalhes</div>
+                                </div>
                             </div>
                         </div>
                         
                         <!-- Circuit 2 -->
-                        <div class="circuit-card">
-                            <div class="circuit-badge">ESCOLA E DESENVOLVIMENTO</div>
-                            <h4>Autódromo de Piracicaba (ECPA)</h4>
-                            <span class="circuit-city">Piracicaba / SP</span>
-                            <p>Excelente traçado técnico perfeito para treinamento de base, acerto fino de suspensão e aprendizado inicial em monopostos. Suas curvas de baixa e média velocidade exigem controle preciso e precisão milimétrica.</p>
-                            <div class="circuit-specs">
-                                <div class="c-spec"><span>Extensão</span><strong>2.100 m</strong></div>
-                                <div class="c-spec"><span>Curvas</span><strong>8</strong></div>
-                                <div class="c-spec"><span>Perfil</span><strong>Técnico / Escola</strong></div>
+                        <div class="circuit-card-wrapper" onclick="this.classList.toggle('flipped')">
+                            <div class="circuit-card-inner">
+                                <div class="circuit-card-front">
+                                    <div>
+                                        <div class="circuit-badge">ESCOLA E DESENVOLVIMENTO</div>
+                                        <h4>Autódromo de Piracicaba (ECPA)</h4>
+                                        <span class="circuit-city">Piracicaba / SP</span>
+                                        <p>Excelente traçado técnico perfeito para treinamento de base, acerto fino de suspensão e aprendizado inicial em monopostos. Suas curvas de baixa e média velocidade exigem controle preciso e precisão milimétrica.</p>
+                                    </div>
+                                    <div>
+                                        <div class="circuit-specs">
+                                            <div class="c-spec"><span>Extensão</span><strong>2.100 m</strong></div>
+                                            <div class="c-spec"><span>Curvas</span><strong>8</strong></div>
+                                            <div class="c-spec"><span>Perfil</span><strong>Técnico / Escola</strong></div>
+                                        </div>
+                                        <div class="flip-hint"><i class="fa-solid fa-rotate"></i> Clique para ver o mapa</div>
+                                    </div>
+                                </div>
+                                <div class="circuit-card-back">
+                                    <div>
+                                        <div class="circuit-badge">MAPA DO TRAÇADO</div>
+                                        <h4>Autódromo de Piracicaba</h4>
+                                    </div>
+                                    <div class="circuit-map-container">
+                                        <img src="fotos/piracicaba-mapa.png" alt="Mapa do Autódromo de Piracicaba" class="circuit-map-img">
+                                    </div>
+                                    <div class="flip-hint"><i class="fa-solid fa-rotate"></i> Clique para ver detalhes</div>
+                                </div>
                             </div>
                         </div>
                     </div>

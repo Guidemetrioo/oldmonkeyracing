@@ -401,7 +401,7 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-image: url('fotos/hero-banner.png');
+    background-image: url('fotos/banner hero desktop.jpg');
     background-size: cover;
     background-position: center;
     overflow: hidden;
@@ -413,8 +413,8 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 60% 40%, rgba(1, 1, 1, 0.4) 0%, rgba(1, 1, 1, 0.95) 75%),
-                linear-gradient(180deg, rgba(1,1,1,0.7) 0%, rgba(1,1,1,1) 100%);
+    background: radial-gradient(circle at 50% 50%, rgba(1, 1, 1, 0.2) 0%, rgba(1, 1, 1, 0.6) 80%),
+                linear-gradient(180deg, rgba(1,1,1,0.3) 0%, rgba(1,1,1,0.7) 100%);
     z-index: 1;
 }
 
@@ -438,7 +438,7 @@ img {
 }
 
 .hero-title {
-    font-size: 3.2rem;
+    font-size: 2.9rem;
     font-weight: 950;
     line-height: 1.05;
     margin-bottom: 20px;
@@ -452,7 +452,7 @@ img {
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--text-muted);
     margin-bottom: 35px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -518,11 +518,21 @@ img {
 }
 
 @media (max-width: 768px) {
+    .hero-section {
+        background-image: url('fotos/banner hero mobile.jpg');
+    }
+    .about-section {
+        background-image: linear-gradient(180deg, rgba(1, 1, 1, 0.8) 0%, rgba(1, 1, 1, 0.8) 100%), 
+                          url('fotos/banner sobre nos.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2.0rem;
     }
     .hero-subtitle {
-        font-size: 1.05rem;
+        font-size: 0.98rem;
     }
     .hero-stats-bar {
         position: relative;
@@ -3435,6 +3445,110 @@ img {
     color: #ffffff;
     transform: scale(1.1);
     box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+}
+
+/* 22. 3D Flipping Track Cards */
+.circuit-card-wrapper {
+    perspective: 1000px;
+    cursor: pointer;
+    min-height: 410px;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .circuit-card-wrapper {
+        min-height: 450px;
+    }
+}
+
+.circuit-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.circuit-card-wrapper.flipped .circuit-card-inner {
+    transform: rotateY(180deg);
+}
+
+.circuit-card-front, .circuit-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: var(--transition-normal);
+}
+
+.circuit-card-front {
+    background-color: var(--bg-surface);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.circuit-card-back {
+    background-color: var(--bg-surface-elevated);
+    padding: 30px;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.circuit-card-wrapper:hover .circuit-card-front,
+.circuit-card-wrapper:hover .circuit-card-back {
+    border-color: var(--color-primary);
+}
+
+.circuit-map-container {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+}
+
+.circuit-map-img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.flip-hint {
+    font-size: 0.8rem;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    opacity: 0.8;
+}
+
+.circuit-card-wrapper:hover .flip-hint {
+    opacity: 1;
 }
 
 
