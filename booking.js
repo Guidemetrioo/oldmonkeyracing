@@ -422,12 +422,12 @@ function createBookingModal() {
                     <p class="step-desc">Confira as informações da sua bateria e as instruções de fechamento.</p>
                     
                     <div class="book-summary-card">
-                        <div class="sum-row">📍 <span>Circuito Escolhido:</span> <strong id="book-sum-circuit">-</strong></div>
-                        <div class="sum-row">🏁 <span>Sessões:</span> <strong id="book-sum-batteries">-</strong></div>
-                        <div class="sum-row">👤 <span>Piloto:</span> <strong id="book-sum-driver-name">-</strong></div>
-                        <div class="sum-row">📱 <span>WhatsApp:</span> <strong id="book-sum-driver-phone">-</strong></div>
-                        <div class="sum-row">📊 <span>Experiência:</span> <strong id="book-sum-driver-exp">-</strong></div>
-                        <div class="sum-row total">💰 <span>Valor Estimado:</span> <strong id="book-sum-total" class="text-gradient">R$ 0,00</strong></div>
+                        <div class="sum-row"><i class="fa-solid fa-location-dot" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Circuito Escolhido:</span> <strong id="book-sum-circuit">-</strong></div>
+                        <div class="sum-row"><i class="fa-solid fa-flag-checkered" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Sessões:</span> <strong id="book-sum-batteries">-</strong></div>
+                        <div class="sum-row"><i class="fa-solid fa-user" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Piloto:</span> <strong id="book-sum-driver-name">-</strong></div>
+                        <div class="sum-row"><i class="fa-solid fa-phone" style="margin-right: 8px; color: var(--color-primary);"></i> <span>WhatsApp:</span> <strong id="book-sum-driver-phone">-</strong></div>
+                        <div class="sum-row"><i class="fa-solid fa-chart-line" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Experiência:</span> <strong id="book-sum-driver-exp">-</strong></div>
+                        <div class="sum-row total"><i class="fa-solid fa-wallet" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Valor Estimado:</span> <strong id="book-sum-total" class="text-gradient">R$ 0,00</strong></div>
                     </div>
                     
                     <div class="book-checkout-sim-box text-center">

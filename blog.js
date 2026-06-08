@@ -11,7 +11,7 @@ const BLOG_POSTS = [
         categoryLabel: "Iniciantes",
         date: "28 de Maio, 2026",
         author: "Edu Dias",
-        image: "fotos/galeria-1.jpg",
+        image: "fotos/galeria-1.png",
         snippet: "Quer pilotar um Fórmula 1600 no templo da velocidade? Conheça os requisitos, a estrutura de boxes e como funciona o aluguel.",
         content: `
             <p>O sonho de pilotar um carro de corrida real no lendário Autódromo de Interlagos é muito mais acessível do que a maioria dos entusiastas imagina. O serviço de aluguel de carros de Fórmula 1600 (F1600) da Old Monkey Racing oferece uma experiência de pista completa para entusiastas e pilotos em início de carreira, com toda a infraestrutura de uma equipe de competição profissional.</p>
@@ -46,7 +46,7 @@ const BLOG_POSTS = [
         categoryLabel: "Iniciantes",
         date: "20 de Maio, 2026",
         author: "Equipe Old Monkey",
-        image: "fotos/galeria-5.jpg",
+        image: "fotos/galeria-5.png",
         snippet: "Conheça os detalhes técnicos do monoposto e entenda por que a ausência de eletrônica faz dele a melhor escola de pilotagem do Brasil.",
         content: `
             <p>A Fórmula 1600 é amplamente reconhecida no cenário nacional como a melhor categoria escola do automobilismo. Combinando baixo custo operacional com um altíssimo nível técnico de competição, ela serve como o passo natural para quem está saindo do kart ou deseja fazer a transição dos track days de carros de rua para os monopostos puro-sangue.</p>
@@ -74,7 +74,7 @@ const BLOG_POSTS = [
         categoryLabel: "Dicas de Pilotagem",
         date: "15 de Maio, 2026",
         author: "Edu Dias",
-        image: "fotos/galeria-2.jpg",
+        image: "fotos/galeria-2.png",
         snippet: "Guia completo curva a curva de Interlagos. Aprenda os pontos de tangência e frenagem da pista mais importante do automobilismo nacional.",
         content: `
             <p>O Autódromo de Interlagos é um dos circuitos mais técnicos do mundo. Para fazer um tempo de volta de respeito em um Fórmula 1600, você precisa conhecer os detalhes de cada curva e usar a física do chassi a seu favor. Abaixo, o piloto campeão Edu Dias compartilha o caminho ideal.</p>
@@ -104,7 +104,7 @@ const BLOG_POSTS = [
         categoryLabel: "Iniciantes",
         date: "08 de Maio, 2026",
         author: "Equipe Old Monkey",
-        image: "fotos/galeria-4.jpg",
+        image: "fotos/galeria-4.png",
         snippet: "Idade mínima, custos, requisitos físicos e carteira de piloto. Respondemos ao FAQ definitivo para quem quer estrear nas pistas.",
         content: `
             <p>Começar a correr de carro de verdade costuma parecer um labirinto burocrático e financeiro. Para desmistificar esse processo, reunimos as dúvidas mais comuns de entusiastas que nos procuram na Old Monkey Racing e respondemos de forma direta.</p>
@@ -131,7 +131,7 @@ const BLOG_POSTS = [
         categoryLabel: "Dicas de Pilotagem",
         date: "02 de Maio, 2026",
         author: "Edu Dias",
-        image: "fotos/galeria-3.jpg",
+        image: "fotos/galeria-3.png",
         snippet: "Aprenda o conceito de frenagem regressiva e trail braking para parar no menor espaço e estabilizar o carro de corrida nas curvas.",
         content: `
             <p>O maior vício que motoristas de rua trazem para as pistas de corrida é a forma de frear. Na rua, somos ensinados a frear de forma progressiva: começamos com leve pressão no pedal e vamos aumentando a força à medida que o obstáculo se aproxima. Na pista, se você fizer isso, vai passar reto na curva ou perder segundos cruciais.</p>
@@ -154,7 +154,7 @@ const BLOG_POSTS = [
         categoryLabel: "Dicas de Pilotagem",
         date: "25 de Abril, 2026",
         author: "Edu Dias",
-        image: "fotos/galeria-2.jpg",
+        image: "fotos/galeria-2.png",
         snippet: "Entenda a física por trás do vácuo aerodinâmico e como usar o alinhamento de carros para efetuar ultrapassagens duplas e estratégicas.",
         content: `
             <p>Em categorias altamente equilibradas e com motores idênticos como a Fórmula 1600, a potência pura não é suficiente para garantir a vitória. O piloto precisa dominar a tática e, acima de tudo, a física da aerodinâmica. É aí que entra a arte de utilizar o vácuo.</p>
@@ -175,7 +175,7 @@ const BLOG_POSTS = [
         categoryLabel: "Iniciantes",
         date: "18 de Abril, 2026",
         author: "Equipe Old Monkey",
-        image: "fotos/galeria-6.jpg",
+        image: "fotos/galeria-6.png",
         snippet: "Evite os vícios clássicos da direção de rua, melhore seu campo visual e aprenda a controlar a tração traseira do Fórmula 1600.",
         content: `
             <p>Pilotar um carro de fórmula pela primeira vez traz uma enxurrada de estímulos visuais e físicos. É natural que iniciantes cometam erros decorrentes de hábitos de direção de rua. Apontamos os 5 erros mais comuns para você evitá-los em seu primeiro treino com a Old Monkey Racing.</p>
@@ -205,7 +205,7 @@ const BLOG_POSTS = [
         categoryLabel: "Bastidores",
         date: "10 de Abril, 2026",
         author: "Edu Dias",
-        image: "fotos/galeria-3.jpg",
+        image: "fotos/galeria-3.png",
         snippet: "A conexão mecânica e pura entre o piloto e a máquina na F1600. Descubra a sensibilidade de pilotar sem freios ABS ou controle de tração.",
         content: `
             <p>Em uma época em que até os supercarros de rua são cheios de sensores eletrônicos que corrigem os erros do motorista, a Fórmula 1600 se orgulha de manter o automobilismo raiz. Sentar em um F1600 da Old Monkey Racing é experimentar a conexão direta e analógica entre o piloto e a pista.</p>
@@ -226,7 +226,7 @@ const BLOG_POSTS = [
         categoryLabel: "Bastidores",
         date: "02 de Abril, 2026",
         author: "Equipe Old Monkey",
-        image: "fotos/galeria-4.jpg",
+        image: "fotos/galeria-4.png",
         snippet: "Acompanhe o relato completo de um dia de pista: do briefing inicial à adrenalina pura de acelerar fundo na reta de Interlagos.",
         content: `
             <p>O que acontece no box de uma equipe campeã durante um dia de testes? Convidamos você a acompanhar o roteiro completo da experiência de aluguel de Fórmula 1600 com a Old Monkey Racing, vivenciando a rotina de um piloto de corrida profissional.</p>
@@ -340,8 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-card-meta">
-                        <span>📅 ${post.date}</span>
-                        <span>✍️ ${post.author}</span>
+                        <span><i class="fa-regular fa-calendar-days"></i> ${post.date}</span>
+                        <span><i class="fa-solid fa-user-pen"></i> ${post.author}</span>
                     </div>
                     <h3 class="blog-card-title">${post.title}</h3>
                     <p class="blog-card-snippet">${post.snippet}</p>
@@ -429,13 +429,13 @@ function openArticleModal(postId) {
                                 <h4>Compartilhe esta Matéria:</h4>
                                 <div class="blog-share-icons">
                                     <button class="share-icon-btn whatsapp" id="share-wpp" aria-label="Compartilhar no WhatsApp">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="wpp-social-icon-svg" style="width: 18px; height: 18px; fill: currentColor; vertical-align: middle; margin-right: 8px; display: inline-block;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L3.2 496l133-34.9c32.7 17.8 69.3 27.2 107.5 27.2 122.4 0 222-99.6 222-222 0-59.3-23.2-115-65.1-157.1zM223.9 453.8c-33.2 0-65.8-8.9-94.2-25.7l-6.7-4-79.8 20.9 21.3-77.8-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.7-186.6 184.7zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg> WhatsApp
+                                        <i class="fa-brands fa-whatsapp" style="margin-right: 8px;"></i> WhatsApp
                                     </button>
                                     <button class="share-icon-btn facebook" id="share-fb" aria-label="Compartilhar no Facebook">
-                                        📘 Facebook
+                                        <i class="fa-brands fa-facebook-f" style="margin-right: 8px;"></i> Facebook
                                     </button>
                                     <button class="share-icon-btn copy" id="share-copy" aria-label="Copiar Link">
-                                        🔗 Copiar Link
+                                        <i class="fa-solid fa-link" style="margin-right: 8px;"></i> Copiar Link
                                     </button>
                                 </div>
                             </div>
@@ -465,8 +465,8 @@ function openArticleModal(postId) {
     modalImg.alt = post.title;
     modalCategory.textContent = post.categoryLabel;
     modalTitle.textContent = post.title;
-    modalDate.textContent = `📅 ${post.date}`;
-    modalAuthor.textContent = `✍️ Por ${post.author}`;
+    modalDate.innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${post.date}`;
+    modalAuthor.innerHTML = `<i class="fa-solid fa-user-pen"></i> Por ${post.author}`;
     modalText.innerHTML = post.content;
 
     // Social Sharing APIs
