@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // State Variables
     let currentStep = 1;
     let selectedCircuit = '';
-    let batteriesCount = 1;
+    let selectedDate = '';
+    let selectedTimes = [];
+    let batteriesCount = 0;
     const PRICE_PER_BATTERY = 3000; // R$ 3.000,00 por bateria/sessão
     
     // 3. Bind Trigger Buttons to Open Modal
@@ -63,10 +65,25 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Reset selections
         circuitCards.forEach(c => c.classList.remove('selected'));
-        if (batteryInput) batteryInput.value = 1;
+        selectedDate = '';
+        selectedTimes = [];
+        batteriesCount = 0;
+        
+        const dateInput = document.getElementById('book-date');
+        if (dateInput) dateInput.value = '';
+        
+        const timeBtns = document.querySelectorAll('.timeslot-btn');
+        timeBtns.forEach(btn => btn.classList.remove('selected'));
+        
         if (driverName) driverName.value = '';
         if (driverPhone) driverPhone.value = '';
-        if (driverCnh) driverCnh.checked = false;
+        
+        const driverReqs = document.getElementById('book-driver-reqs');
+        if (driverReqs) driverReqs.checked = false;
+        
+        const driverTerms = document.getElementById('book-driver-terms');
+        if (driverTerms) driverTerms.checked = false;
+        
         if (driverExp) driverExp.selectedIndex = 0;
         
         updateTotalAndSpecs();
@@ -164,9 +181,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if (stepNum === 2) {
-            const count = parseInt(batteryInput.value);
-            if (isNaN(count) || count < 1) {
-                alert('A quantidade mínima é de 1 bateria de treino.');
+            const dateInput = document.getElementById('book-date');
+            if (!dateInput || !dateInput.value) {
+                alert('Por favor, selecione uma data para o treino.');
+                return false;
+            }
+            if (selectedTimes.length === 0) {
+                alert('Por favor, selecione pelo menos um horário de bateria.');
                 return false;
             }
             return true;
@@ -183,13 +204,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 driverPhone.focus();
                 return false;
             }
-            if (!driverCnh.checked) {
-                alert('Atenção: É obrigatório possuir CNH ativa na categoria B para a pilotagem do monoposto F1600 nos autódromos.');
+            const driverReqs = document.getElementById('book-driver-reqs');
+            if (driverReqs && !driverReqs.checked) {
+                alert('Atenção: É obrigatório confirmar que atende aos requisitos físicos e de idade mínima para pilotagem.');
                 return false;
             }
             if (!driverExp.value) {
                 alert('Por favor, selecione seu nível de experiência nas pistas.');
                 driverExp.focus();
+                return false;
+            }
+            const driverTerms = document.getElementById('book-driver-terms');
+            if (driverTerms && !driverTerms.checked) {
+                alert('É obrigatório aceitar o Termo de Adesão e Responsabilidade para prosseguir com a reserva.');
                 return false;
             }
             return true;
@@ -205,6 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 circuitCards.forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
                 selectedCircuit = card.dataset.circuit === 'interlagos' ? 'Autódromo de Interlagos (SP)' : 'Autódromo de Piracicaba (ECPA)';
+                
+                populateDates(card.dataset.circuit);
+                
                 setTimeout(() => {
                     if (currentStep === 1) showStep(2);
                 }, 200);
@@ -212,65 +242,110 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // 7. Step 2: Batteries Counter Control
-    function updateTotalAndSpecs() {
-        if (batteryInput) {
-            batteriesCount = parseInt(batteryInput.value) || 1;
-            if (batteriesCount < 1) {
-                batteriesCount = 1;
-                batteryInput.value = 1;
-            }
-        }
+    function populateDates(circuit) {
+        const dateSelect = document.getElementById('book-date');
+        if (!dateSelect) return;
         
+        dateSelect.innerHTML = '';
+        
+        const mockDatesInterlagos = [
+            { value: '10/07/2026', label: '10 de Julho de 2026 (Sexta-feira)' },
+            { value: '11/07/2026', label: '11 de Julho de 2026 (Sábado)' },
+            { value: '12/07/2026', label: '12 de Julho de 2026 (Domingo)' }
+        ];
+        
+        const mockDatesPiracicaba = [
+            { value: '15/08/2026', label: '15 de Agosto de 2026 (Sábado)' },
+            { value: '16/08/2026', label: '16 de Agosto de 2026 (Domingo)' }
+        ];
+        
+        const dates = circuit === 'interlagos' ? mockDatesInterlagos : mockDatesPiracicaba;
+        
+        dates.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d.value;
+            opt.textContent = d.label;
+            dateSelect.appendChild(opt);
+        });
+        
+        selectedDate = dates[0].value;
+    }
+    
+    // 7. Step 2: Date and Timeslot Control
+    function updateTotalAndSpecs() {
+        batteriesCount = selectedTimes.length;
         const totalVal = batteriesCount * PRICE_PER_BATTERY;
         
-        if (pricePerBatteryText) {
-            pricePerBatteryText.textContent = `R$ ${PRICE_PER_BATTERY.toLocaleString('pt-BR')},00`;
+        const countText = document.getElementById('book-selected-count');
+        const totalText = document.getElementById('book-total-price');
+        
+        if (countText) {
+            countText.textContent = batteriesCount.toString();
         }
-        if (totalPriceText) {
-            totalPriceText.textContent = `R$ ${totalVal.toLocaleString('pt-BR')},00`;
+        if (totalText) {
+            totalText.textContent = `R$ ${totalVal.toLocaleString('pt-BR')},00`;
         }
     }
     
-    if (batteryDecrease) {
-        batteryDecrease.addEventListener('click', () => {
-            let val = parseInt(batteryInput.value) || 1;
-            if (val > 1) {
-                batteryInput.value = val - 1;
+    // Bind time slots dynamically (since they are created in HTML string)
+    // We'll delegate from modal
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target.classList.contains('timeslot-btn')) {
+                const btn = e.target;
+                const time = btn.dataset.time;
+                
+                if (btn.classList.contains('selected')) {
+                    btn.classList.remove('selected');
+                    selectedTimes = selectedTimes.filter(t => t !== time);
+                } else {
+                    // Check limit
+                    if (selectedCircuit.includes('Interlagos') && selectedTimes.length >= 4) {
+                        alert('Em Interlagos, há um limite de até 4 sessões por piloto no mesmo dia.');
+                        return;
+                    }
+                    btn.classList.add('selected');
+                    selectedTimes.push(time);
+                }
                 updateTotalAndSpecs();
             }
+            
+            // Track Date selection
+            const dateInput = document.getElementById('book-date');
+            if (dateInput) {
+                dateInput.addEventListener('change', () => {
+                    selectedDate = dateInput.value;
+                });
+            }
         });
-    }
-    
-    if (batteryIncrease) {
-        batteryIncrease.addEventListener('click', () => {
-            let val = parseInt(batteryInput.value) || 1;
-            batteryInput.value = val + 1;
-            updateTotalAndSpecs();
-        });
-    }
-    
-    if (batteryInput) {
-        batteryInput.addEventListener('change', updateTotalAndSpecs);
     }
     
     // 8. Step 4: Summary Preparation
     function populateSummary() {
         const totalVal = batteriesCount * PRICE_PER_BATTERY;
-        const expLabel = driverExp.options[driverExp.selectedIndex].text;
+        const expLabel = driverExp ? driverExp.options[driverExp.selectedIndex].text : '';
+        const dateInput = document.getElementById('book-date');
+        const formattedDate = dateInput && dateInput.value ? dateInput.value : '-';
         
-        if (summaryCircuit) summaryCircuit.textContent = selectedCircuit;
-        if (summaryBatteries) summaryBatteries.textContent = `${batteriesCount} bateria(s) de treino (Fórmula 1600)`;
-        if (summaryDriverName) summaryDriverName.textContent = driverName.value.trim();
-        if (summaryDriverPhone) summaryDriverPhone.textContent = driverPhone.value.trim();
+        const summaryHtmlCircuit = document.getElementById('book-sum-circuit');
+        const summaryHtmlBatteries = document.getElementById('book-sum-batteries');
+        
+        if (summaryHtmlCircuit) summaryHtmlCircuit.textContent = `${selectedCircuit} - Data: ${formattedDate}`;
+        if (summaryHtmlBatteries) summaryHtmlBatteries.textContent = `${batteriesCount} bateria(s) | Horários: ${selectedTimes.sort().join(', ')}`;
+        
+        if (summaryDriverName) summaryDriverName.textContent = driverName ? driverName.value.trim() : '-';
+        if (summaryDriverPhone) summaryDriverPhone.textContent = driverPhone ? driverPhone.value.trim() : '-';
         if (summaryDriverExp) summaryDriverExp.textContent = expLabel;
-        if (summaryTotalText) summaryTotalText.textContent = `R$ ${totalVal.toLocaleString('pt-BR')},00`;
+        
+        const summaryHtmlTotal = document.getElementById('book-sum-total');
+        if (summaryHtmlTotal) summaryHtmlTotal.textContent = `R$ ${totalVal.toLocaleString('pt-BR')},00`;
     }
     
-    // 9. Finalize and Redirect to WhatsApp
     function finalizeBooking() {
         const totalVal = batteriesCount * PRICE_PER_BATTERY;
-        const expLabel = driverExp.options[driverExp.selectedIndex].text;
+        const expLabel = driverExp ? driverExp.options[driverExp.selectedIndex].text : '';
+        const dateInput = document.getElementById('book-date');
+        const formattedDate = dateInput && dateInput.value ? dateInput.value : '';
         
         const intro = '🏎️ *NOVO PEDIDO DE ALUGUEL - FÓRMULA 1600*';
         const details = 
@@ -278,14 +353,17 @@ document.addEventListener('DOMContentLoaded', () => {
             `Gostaria de solicitar a reserva de aluguel do Fórmula 1600 pelo próprio site:\n\n` +
             `*--- DADOS DA RESERVA ---*\n` +
             `📍 *Autódromo:* ${selectedCircuit}\n` +
+            `📅 *Data do Treino:* ${formattedDate}\n` +
+            `⏱️ *Horários Selecionados:* ${selectedTimes.sort().join(', ')}\n` +
             `🏁 *Baterias de Treino:* ${batteriesCount} (R$ ${PRICE_PER_BATTERY.toLocaleString('pt-BR')},00 cada)\n` +
             `💰 *Valor Total Calculado:* R$ ${totalVal.toLocaleString('pt-BR')},00\n\n` +
             `*--- DADOS DO PILOTO ---*\n` +
-            `👤 *Nome Completo:* ${driverName.value.trim()}\n` +
-            `📱 *WhatsApp:* ${driverPhone.value.trim()}\n` +
-            `🪪 *CNH Categoria B:* Sim (Ativa/Regularizada)\n` +
-            `📊 *Nível de Experiência:* ${expLabel}\n\n` +
-            `Aguardando retorno para confirmar a data de pista disponível no calendário e chave Pix para pagamento!`;
+            `👤 *Nome Completo:* ${driverName ? driverName.value.trim() : ''}\n` +
+            `📱 *WhatsApp:* ${driverPhone ? driverPhone.value.trim() : ''}\n` +
+            `📏 *Requisitos Físicos:* Confirmado (Máx 1,90m, 120kg, 15+ anos)\n` +
+            `📊 *Nível de Experiência:* ${expLabel}\n` +
+            `✅ *Termo de Responsabilidade:* LIDO E ACEITO\n\n` +
+            `Aguardando retorno para confirmar a disponibilidade no calendário e chave Pix para pagamento!`;
             
         const whatsappUrl = `https://wa.me/5511984014296?text=${encodeURIComponent(details)}`;
         
@@ -356,26 +434,38 @@ function createBookingModal() {
                     </div>
                 </div>
                 
-                <!-- PASSO 2: Baterias e Preço -->
+                <!-- PASSO 2: Data e Horários -->
                 <div class="book-step-content" data-step="2">
-                    <h3>Quantas baterias de treino você quer agendar?</h3>
-                    <p class="step-desc">Cada bateria corresponde a uma sessão de pista completa com suporte técnico de boxes e análise de telemetria.</p>
+                    <h3>Escolha a Data e os Horários</h3>
+                    <p class="step-desc">Selecione a data pretendida e clique nas sessões de treino desejadas (em Interlagos há um limite de 4 treinos por piloto ao dia).</p>
                     
-                    <div class="book-counter-card">
-                        <span class="counter-label">Selecione as Baterias</span>
-                        <div class="book-counter-wrapper">
-                            <button id="book-btn-battery-minus" type="button" aria-label="Diminuir">-</button>
-                            <input id="book-batteries" type="number" value="1" min="1" readonly>
-                            <button id="book-btn-battery-plus" type="button" aria-label="Aumentar">+</button>
+                    <div class="book-datetime-card">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="book-date">Datas Disponíveis *</label>
+                            <select id="book-date" required style="width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px; appearance: auto;">
+                                <!-- As opções serão preenchidas dinamicamente via JS -->
+                            </select>
                         </div>
-                        <div class="book-pricing-display">
-                            <div class="price-row">
-                                <span>Preço por Bateria:</span>
-                                <strong id="book-price-per-battery">R$ 3.000,00</strong>
+                        
+                        <div class="form-group">
+                            <label>Horários Disponíveis (Baterias) *</label>
+                            <div class="book-timeslot-grid" id="book-timeslots" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                                <button type="button" class="timeslot-btn" data-time="08:00">08:00 - Sessão 1</button>
+                                <button type="button" class="timeslot-btn" data-time="10:30">10:30 - Sessão 2</button>
+                                <button type="button" class="timeslot-btn" data-time="13:30">13:30 - Sessão 3</button>
+                                <button type="button" class="timeslot-btn" data-time="16:00">16:00 - Sessão 4</button>
                             </div>
-                            <div class="price-row total-row">
+                            <p class="timeslot-info" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; margin-bottom: 0;">Clique nos horários para adicionar/remover da sua reserva.</p>
+                        </div>
+                        
+                        <div class="book-pricing-display" style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                            <div class="price-row" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Baterias Selecionadas:</span>
+                                <strong id="book-selected-count">0</strong>
+                            </div>
+                            <div class="price-row total-row" style="display: flex; justify-content: space-between; font-size: 1.2rem;">
                                 <span>Valor Estimado:</span>
-                                <strong id="book-total-price" class="text-gradient">R$ 3.000,00</strong>
+                                <strong id="book-total-price" class="text-gradient">R$ 0,00</strong>
                             </div>
                         </div>
                     </div>
@@ -409,9 +499,21 @@ function createBookingModal() {
                             </div>
                         </div>
                         
-                        <div class="form-checkbox-group">
-                            <input type="checkbox" id="book-driver-cnh">
-                            <label for="book-driver-cnh">Declaro possuir Carteira de Habilitação (CNH Categoria B) ativa e regularizada.</label>
+                        <div class="form-checkbox-group" style="margin-bottom: 15px;">
+                            <input type="checkbox" id="book-driver-reqs">
+                            <label for="book-driver-reqs">Confirmo atender aos requisitos: altura máx. 1,90m, peso máx. 120kg e idade mínima de 15 anos (com assinatura do responsável).</label>
+                        </div>
+                        
+                        <!-- Termo de Adesão -->
+                        <div class="liability-waiver-box" style="margin-top: 15px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 4px; padding: 15px;">
+                            <label style="font-size: 0.9rem; color: var(--text-main); margin-bottom: 5px; display: block;">Termo de Adesão e Responsabilidade</label>
+                            <div class="liability-text" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 15px;">
+                                <p><strong>ASSUNÇÃO DE RISCOS</strong> - O automobilismo é um esporte de risco. A Old Monkey Racing isenta-se de responsabilidade sobre danos físicos ou de saúde. O locatário é responsável financeiramente por quebras ou danos ao carro gerados por sua falha de pilotagem. É obrigatório respeitar a equipe de pista, sujeito a exclusão sem reembolso.</p>
+                            </div>
+                            <div class="form-checkbox-group" style="margin: 0;">
+                                <input type="checkbox" id="book-driver-terms">
+                                <label for="book-driver-terms" style="color: var(--color-primary); font-weight: 600;">Li e concordo com o Termo de Responsabilidade.</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -422,12 +524,30 @@ function createBookingModal() {
                     <p class="step-desc">Confira as informações da sua bateria e as instruções de fechamento.</p>
                     
                     <div class="book-summary-card">
-                        <div class="sum-row"><i class="fa-solid fa-location-dot" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Circuito Escolhido:</span> <strong id="book-sum-circuit">-</strong></div>
-                        <div class="sum-row"><i class="fa-solid fa-flag-checkered" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Sessões:</span> <strong id="book-sum-batteries">-</strong></div>
-                        <div class="sum-row"><i class="fa-solid fa-user" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Piloto:</span> <strong id="book-sum-driver-name">-</strong></div>
-                        <div class="sum-row"><i class="fa-solid fa-phone" style="margin-right: 8px; color: var(--color-primary);"></i> <span>WhatsApp:</span> <strong id="book-sum-driver-phone">-</strong></div>
-                        <div class="sum-row"><i class="fa-solid fa-chart-line" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Experiência:</span> <strong id="book-sum-driver-exp">-</strong></div>
-                        <div class="sum-row total"><i class="fa-solid fa-wallet" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Valor Estimado:</span> <strong id="book-sum-total" class="text-gradient">R$ 0,00</strong></div>
+                        <div class="sum-row">
+                            <div class="sum-label"><i class="fa-solid fa-location-dot" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Circuito Escolhido:</span></div>
+                            <strong id="book-sum-circuit">-</strong>
+                        </div>
+                        <div class="sum-row">
+                            <div class="sum-label"><i class="fa-solid fa-flag-checkered" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Sessões:</span></div>
+                            <strong id="book-sum-batteries">-</strong>
+                        </div>
+                        <div class="sum-row">
+                            <div class="sum-label"><i class="fa-solid fa-user" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Piloto:</span></div>
+                            <strong id="book-sum-driver-name">-</strong>
+                        </div>
+                        <div class="sum-row">
+                            <div class="sum-label"><i class="fa-solid fa-phone" style="margin-right: 8px; color: var(--color-primary);"></i> <span>WhatsApp:</span></div>
+                            <strong id="book-sum-driver-phone">-</strong>
+                        </div>
+                        <div class="sum-row">
+                            <div class="sum-label"><i class="fa-solid fa-chart-line" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Experiência:</span></div>
+                            <strong id="book-sum-driver-exp">-</strong>
+                        </div>
+                        <div class="sum-row total" style="margin-top: 15px; border-top: 1px dashed var(--border-color); padding-top: 15px;">
+                            <div class="sum-label"><i class="fa-solid fa-wallet" style="margin-right: 8px; color: var(--color-primary);"></i> <span>Valor Estimado:</span></div>
+                            <strong id="book-sum-total" class="text-gradient">R$ 0,00</strong>
+                        </div>
                     </div>
                     
                     <div class="book-checkout-sim-box text-center">
